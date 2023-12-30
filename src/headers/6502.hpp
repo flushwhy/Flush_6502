@@ -35,6 +35,11 @@ struct CPU {
     Byte N : 1;
 
     void Reset( Mem& memory );
+
+    
+    static constexpr Byte 
+      INS_LDA_IM = 0xA9;
+
     void Execute(u32 Cycles, Mem& memory );
 
     Byte FetchByte( u32& Cycles, Mem& memory ) {

@@ -23,6 +23,20 @@ void CPU::Execute(u32 Cycles, Mem& memory ) {
     while( Cycles > 0 )
     {
         Byte Ins = FetchByte( Cycles, memory );
+      
+      switch ( Ins ){
+        case INS_LDA_IM:
+        {
+          Byte Value = FetchByte( Cycles, memory );
+          A = Value;
+          Z = (A == 0);
+          N = (A & 0b10000000) > 0;
+        } break;
+        default:
+        {
+          printf("Instruction not handled %d ", Ins);
+        } break;
+      }
     }
 }
 
