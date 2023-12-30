@@ -5,7 +5,6 @@ int main() {
     CPU cpu;
 
     cpu.Reset( mem );
-    printf("got ya!! \n");
-
+    cpu.Execute(2, mem );
     return 0;
 }

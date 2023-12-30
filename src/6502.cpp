@@ -14,11 +14,17 @@ void CPU::Reset( Mem& memory) {
     V = 1;
     N = 1;
 
-    
+
     memory.Initialise();
 }
 
-
+void CPU::Execute(u32 Cycles, Mem& memory ) {
+    
+    while( Cycles > 0 )
+    {
+        Byte Ins = FetchByte( Cycles, memory );
+    }
+}
 
 void Mem::Initialise() {
 

@@ -1,3 +1,4 @@
+#pragma once
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -11,6 +12,11 @@ struct Mem {
     Byte Data[MAX_MEM];
 
     void Initialise();
+
+    Byte operator[]( u32 Address ) const {
+        
+        return Data[Address];
+    }
 };
 
 struct CPU {
@@ -29,5 +35,13 @@ struct CPU {
     Byte N : 1;
 
     void Reset( Mem& memory );
+    void Execute(u32 Cycles, Mem& memory );
 
+    Byte FetchByte( u32& Cycles, Mem& memory ) {
+        Byte Data = memory[PC];
+        PC++;
+        Cycles--;
+
+        return Data;
+    }
 };
