@@ -6,9 +6,11 @@ using Word = unsigned short;
 
 using u32 = unsigned int;
 
-stuct Mem {
-    constexpr MAX_MEM = 1024 * 64;
-    Byte Data[MAX_MEM]
+struct Mem {
+    static constexpr u32 MAX_MEM = 1024 * 64;
+    Byte Data[MAX_MEM];
+
+    void Initialise();
 };
 
 struct CPU {
@@ -26,6 +28,6 @@ struct CPU {
     Byte V : 1; 
     Byte N : 1;
 
-    void Reset();
+    void Reset( Mem& memory );
 
 };

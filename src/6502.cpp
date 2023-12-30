@@ -1,6 +1,6 @@
 #include "6502.hpp"
 
-void CPU::Reset() {
+void CPU::Reset( Mem& memory) {
     PC = 0xFFFC;
     SP = 0x0100;
     A = 0;
@@ -13,4 +13,16 @@ void CPU::Reset() {
     B = 1;
     V = 1;
     N = 1;
+
+    
+    memory.Initialise();
+}
+
+
+
+void Mem::Initialise() {
+
+    for ( u32 i = 0; i < MAX_MEM; i++ ) {
+        Data[i] = 0;
+    }
 }
