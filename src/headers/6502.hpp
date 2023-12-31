@@ -8,6 +8,7 @@ using Word = unsigned short;
 using u32 = unsigned int;
 
 struct Mem {
+    
     static constexpr u32 MAX_MEM = 1024 * 64;
     Byte Data[MAX_MEM];
 
@@ -35,12 +36,10 @@ struct CPU {
     Byte N : 1;
 
     void Reset( Mem& memory );
-
-    
-    static constexpr Byte 
-      INS_LDA_IM = 0xA9;
-
     void Execute(u32 Cycles, Mem& memory );
+    
+    static constexpr Byte INS_LDA_IM = 0xA9;
+ 
 
     Byte FetchByte( u32& Cycles, Mem& memory ) {
         Byte Data = memory[PC];

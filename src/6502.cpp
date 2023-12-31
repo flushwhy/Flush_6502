@@ -1,8 +1,10 @@
 #include "6502.hpp"
 
 void CPU::Reset( Mem& memory) {
+
     PC = 0xFFFC;
     SP = 0x0100;
+    
     A = 0;
     X = 0;
     Y = 0;
@@ -25,6 +27,7 @@ void CPU::Execute(u32 Cycles, Mem& memory ) {
         Byte Ins = FetchByte( Cycles, memory );
       
       switch ( Ins ){
+
         case INS_LDA_IM:
         {
           Byte Value = FetchByte( Cycles, memory );
@@ -32,6 +35,7 @@ void CPU::Execute(u32 Cycles, Mem& memory ) {
           Z = (A == 0);
           N = (A & 0b10000000) > 0;
         } break;
+
         default:
         {
           printf("Instruction not handled %d ", Ins);
