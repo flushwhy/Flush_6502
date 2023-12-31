@@ -14,7 +14,7 @@ struct Mem {
 
     void Initialise();
 
-    Byte operator[]( u32 Address ) const {
+    Byte& operator[]( u32 Address ) {
         
         return Data[Address];
     }
@@ -37,8 +37,11 @@ struct CPU {
 
     void Reset( Mem& memory );
     void Execute(u32 Cycles, Mem& memory );
+    void LDASetStatus();
     
-    static constexpr Byte INS_LDA_IM = 0xA9;
+    static constexpr Byte 
+    INS_LDA_IM = 0xA9,
+    INS_LDA_ZP = 0xA5;
  
 
     Byte FetchByte( u32& Cycles, Mem& memory ) {
@@ -46,6 +49,12 @@ struct CPU {
         PC++;
         Cycles--;
 
+        return Data;
+    }
+
+    Byte ReadByte( u32& Cycles, Byte Address, Mem& memory ) {
+        Byte Data = memory[Address];
+        Cycles--;
         return Data;
     }
 };

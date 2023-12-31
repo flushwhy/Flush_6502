@@ -32,14 +32,20 @@ void CPU::Execute(u32 Cycles, Mem& memory ) {
         {
           Byte Value = FetchByte( Cycles, memory );
           A = Value;
-          Z = (A == 0);
-          N = (A & 0b10000000) > 0;
-        } break;
+          
+          LDASetStatus();
+        }break;
+        case INS_LDA_ZP:
+        {
+          Byte ZeroPageAddress = FetchByte( Cycles, memory );
+          A = ReadByte( Cycles, ZeroPageAddress, memory );
 
+          LDASetStatus();
+        }break;
         default:
         {
           printf("Instruction not handled %d ", Ins);
-        } break;
+        }break;
       }
     }
 }
@@ -49,4 +55,9 @@ void Mem::Initialise() {
     for ( u32 i = 0; i < MAX_MEM; i++ ) {
         Data[i] = 0;
     }
+}
+
+void CPU::LDASetStatus() {
+  Z = (A== 0);
+  N = (A & 0b10000000 > 0);
 }
