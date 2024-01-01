@@ -42,6 +42,20 @@ void CPU::Execute(u32 Cycles, Mem& memory ) {
 
           LDASetStatus();
         }break;
+        case INS_LDA_ZPX:
+        {
+          Byte ZeroPageAddress = FetchByte( Cycles, memory );
+          ZeroPageAddress += X;
+          Cycles--;
+        }break;
+        case INS_jup:
+        {
+          Word SubAddress = FetchWord ( Cycles, memory );
+          memory.WriterWord( PC - 1, SP, Cycles );
+          SP--;
+          PC = SubAddress;
+          Cycles--;
+        }break;
         default:
         {
           printf("Instruction not handled %d ", Ins);
@@ -50,6 +64,14 @@ void CPU::Execute(u32 Cycles, Mem& memory ) {
     }
 }
 
+void CPU::LDASetStatus() {
+  Z = (A== 0);
+  N = (A & 0b10000000 > 0);
+}
+
+/*END OF CPU FUNTCIONS*/
+
+/* START OF MEMORY FUNCTCIONS*/
 void Mem::Initialise() {
 
     for ( u32 i = 0; i < MAX_MEM; i++ ) {
@@ -57,7 +79,8 @@ void Mem::Initialise() {
     }
 }
 
-void CPU::LDASetStatus() {
-  Z = (A== 0);
-  N = (A & 0b10000000 > 0);
+void Mem::WriterWord( Word WordVal, u32 Address, u32& Cycles ) {
+  Data[Address]   =   WordVal & 0xFF;
+  Data[Address + 1] = (WordVal >> 8);
+  Cycles -= 2;
 }

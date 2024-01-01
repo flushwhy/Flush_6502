@@ -13,6 +13,7 @@ struct Mem {
     Byte Data[MAX_MEM];
 
     void Initialise();
+    void WriterWord( Word WordVal, u32 Address, u32& Cycles );
 
     Byte& operator[]( u32 Address ) {
         
@@ -40,8 +41,10 @@ struct CPU {
     void LDASetStatus();
     
     static constexpr Byte 
-    INS_LDA_IM = 0xA9,
-    INS_LDA_ZP = 0xA5;
+    INS_LDA_IM  = 0xA9,
+    INS_LDA_ZP  = 0xA5,
+    INS_LDA_ZPX = 0xB5,
+    INS_jup     = 0x20;
  
 
     Byte FetchByte( u32& Cycles, Mem& memory ) {
@@ -55,6 +58,18 @@ struct CPU {
     Byte ReadByte( u32& Cycles, Byte Address, Mem& memory ) {
         Byte Data = memory[Address];
         Cycles--;
+        return Data;
+    }
+
+    Word FetchWord( u32& Cycles, Mem& memory ) {
+        Word Data = memory[PC];
+        PC++;
+
+        Data |= ( memory[PC] << 8 );
+        PC++;
+
+        Cycles -= 2;
+
         return Data;
     }
 };
