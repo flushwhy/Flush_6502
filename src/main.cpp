@@ -5,7 +5,9 @@ int main() {
     CPU cpu;
 
     cpu.Reset( mem );
-    printf("got ya!! \n");
-
+    mem[0xFFFC] = CPU::INS_jup;
+    mem[0xFFFD] = 0x42;
+    mem[0xFFFE] = 0x42;
+    cpu.Execute(3, mem );
     return 0;
 }

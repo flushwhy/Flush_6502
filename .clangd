@@ -1,0 +1,12 @@
+{
+  "compile-commands": "builddir/compile_commands.json",
+  "completion": {
+    "enableSnippets": true,
+    "detailedLabel": true
+  },
+  "clang-tidy": true,
+  "fallback-style": "Google",
+  "formatting": "style",
+  "header-insertion": "never",
+  "suggest-missing-includes": true
+}
